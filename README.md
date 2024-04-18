@@ -1,265 +1,75 @@
-# kubeasy
 
-This project will used ansible to deployment kubernetes.
 
-Read the documentation to see how the project is used
+### 项目名称
+- **kubeasy**
 
-`kubeasy` passed the [cncf conformance test](https://github.com/cncf/k8s-conformance), because k8s-conformance does not allow submission of personal projects, please check here for [details](https://github.com/buxiaomo/k8s-conformance)
+### 项目描述
+- `kubeasy`是一个使用Ansible来部署Kubernetes的项目。
 
-* [group_vars/README.md](group_vars/README.md)
-* [inventory/README.md](inventory/README.md)
+### 项目状态
+- 公共仓库
+- 由`Phoebus888`维护，派生自`buxiaomo/kubeasy`
+- 没有星星(stars)、观察者(watching)或分支(forks)
 
-## Cloud Support
+### 项目功能
+- 通过Ansible自动化部署Kubernetes
+- 支持在线和离线部署
+- 支持多种云平台和架构，包括Raspberry Pi、Azure、Aliyun、AWS、GCP等
+- 支持多种操作系统，包括但不限于CentOS、Ubuntu、Debian、OpenSUSE、Amazon Linux 2等
 
-* [x] Raspberry Pi
-* [x] Azure
-* [x] Aliyun
-* [x] Aws (APIServer HA use the CLB)
-* [x] GCP (APIServer HA use the TCP Load balancing)
+### Kubernetes版本支持
+- 列出了不同Kubernetes版本对应的组件版本，如1.14.x至1.26.x，以及相应的软件包版本
 
-## Architecture Support
+### 使用方法
+- 所有节点需要安装Python
+- 提供了在线部署和离线部署的指南
+- 用户需要根据需要修改`group_vars`目录中的参数
+- 提供了如何配置清单(inventory)的示例和文档
 
-* [x] aarch64 (only download from official)
-* [x] x86_64
+### Kubernetes管理
+- 部署(Deploy)
+- 扩展(Scale)
+- 更新Kubernetes配置
+- 更新Kubernetes证书(Renew certificates)
+- 升级Kubernetes版本(Upgrade)
 
-## OS Support
+### 离线安装
+- 提供了四种不同的归档文件以支持离线安装
+- 如果使用`kubeasy-offline-v${KUBEASY_VERSION}.tar.gz`，则需要一个部署服务器
 
-all node please install python.
+### 已知问题
+- 提到了cgroup子系统未挂载的问题，并提供了参考链接
 
-* [x] UnionTech OS
-* [x] Arch Linux
-* [x] CentOS (7.\*, 8.\*)
-* [x] Ubuntu (16.\*, 18.\*, 20.\*, 21.\*, 22.\*) 
-* [x] Debian (10.\*, 11.\*)
-* [x] OpenSUSE 15
-* [x] Alma Linux 9
-* [x] Amazon Linux 2
-* [x] Rocky Linux (8, 9)
-* [x] Red Hat Enterprise Linux (7, 8)
-* [x] SUSE Linux Enterprise Server 15
+### 相关资源
+- Kubernetes下载
+- Kubernetes变更日志
+- Kubernetes命令行工具参考
+- 列出了多种网络插件，如Calico、Canal、Flannel、Cilium等
+- 提供了有关CoreDNS、证书、IPv4/IPv6双栈、验证IPv4/IPv6双栈、CoreDNS Kubernetes版本等的链接
 
-## kubeasy installs the version corresponding to the k8s component
+### 项目文件
+- 列出了仓库中的文件和目录，包括`.github`、`group_vars`、`inventory`、`plugins`、`roles`、`scripts`、`tests`等
+- 提供了每个文件的最后提交信息和日期
 
-| Kubernetes | Etcd | Docker | Containerd | CNI | CoreDNS | metrics-server | pause |
-|---|---|---|---|---|---|---|---|
-| [1.14.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.14.md) | v3.3.10  | v19.03.9  | v1.5.13 | v0.7.5 | v1.3.1 | v0.5.2 | 3.1    |
-| [1.15.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.15.md) | v3.3.10  | v19.03.9  | v1.5.13 | v0.7.5 | v1.3.1 | v0.5.2 | 3.1    |
-| [1.16.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.16.md) | v3.3.15  | v19.03.9  | v1.5.13 | v0.7.5 | v1.6.2 | v0.5.2 | 3.1    |
-| [1.17.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.17.md) | v3.4.3   | v19.03.9  | v1.5.13 | v0.7.5 | v1.6.5 | v0.5.2 | 3.1    |
-| [1.18.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.18.md) | v3.4.3   | v19.03.9  | v1.5.13 | v0.8.5 | v1.6.7 | v0.5.2 | 3.2    |
-| [1.19.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.19.md) | v3.4.13  | v19.03.9  | v1.5.13 | v0.8.6 | v1.7.0 | v0.5.2 | 3.2    |
-| [1.20.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.20.md) | v3.4.13  | v19.03.9  | v1.5.13 | v0.8.7 | v1.7.0 | v0.6.1 | 3.2    |
-| [1.21.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.21.md) | v3.4.13  | v20.10.17 | v1.5.13 | v1.1.1 | v1.8.0 | v0.6.1 | 3.4.1  |
-| [1.22.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.22.md) | v3.5.0   | v20.10.17 | v1.6.15 | v1.1.1 | v1.8.4 | v0.6.2 | 3.5    |
-| [1.23.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.23.md) | v3.5.1   | v20.10.17 | v1.6.15 | v1.2.0 | v1.8.6 | v0.6.2 | 3.6    |
-| [1.24.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.24.md) | v3.5.3   | N/A       | v1.6.15 | v1.2.0 | v1.8.6 | v0.6.2 | 3.6    |
-| [1.25.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.25.md) | v3.5.4   | N/A       | v1.6.15 | v1.2.0 | v1.9.3 | v0.6.2 | 3.8    |
-| [1.26.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.26.md) | v3.5.6   | N/A       | v1.6.15 | v1.2.0 | v1.9.3 | v0.6.2 | 3.9    |
+### 项目许可证
+- 使用GPL-2.0许可证
 
-## How to use
+### 项目活动
+- 提到了最新的提交和分支信息
 
-The playbook depends on `python2` or `python3` , all nodes need to install `python`
+### 项目反馈
+- 由于列表功能处于测试阶段，鼓励用户分享反馈和报告错误
 
-* [online deployment](#online)
+### 项目链接
+- 提供了项目的Gitee、Gitlab、Github和JiHulab的克隆链接
 
-* [offline deployment](#offline)
+### 项目互动
+- 用户可以对项目进行星标、观察或派生复制
 
-### <span id = "online">online</span>
+### 项目统计信息
+- 显示了项目使用的主要编程语言，包括Jinja、Shell、Python和Makefile
 
-#### Clone code
+### 项目建议工作流
+- 根据技术栈提供了Pylint和Python应用程序的配置建议
 
-Gitee: https://gitee.com/buxiaomo/kubeasy.git
-
-Gitlab: https://gitlab.com/buxiaomo/kubeasy.git
-
-Github: https://github.com/buxiaomo/kubeasy.git
-
-JiHulab: https://jihulab.com/buxiaomo/kubeasy.git
-
-```
-# ubuntu
-apt-get update
-apt-get install git make -y
-
-# centos
-yum install git make vim -y
-
-# Install ansible
-git clone -b v1.26 https://github.com/buxiaomo/kubeasy.git /usr/local/src/kubeasy
-cd /usr/local/src/kubeasy
-```
-#### Install ansible
-```
-cd /usr/local/src/kubeasy
-make runtime
-```
-
-#### Configuration parameters
-
-Please modify the parameters on `group_vars` directory if you need
-
-* [group_vars/README.md](group_vars/README.md)
-
-#### Configuration inventory
-
-```
-cd /usr/local/src/kubeasy
-make hosts
-```
-
-for example:
-
-```
-[master]
-172.16.114.11
-172.16.114.12
-172.16.114.13
-
-[worker]
-172.16.114.14
-172.16.114.15
-172.16.114.16
-172.16.114.17
-
-[kubernetes:children]
-master
-worker
-
-[kubernetes:vars]
-; kubernetes network config
-networking={"dnsDomain": "cluster.local", "serviceSubnet": "10.96.0.0/12", "podSubnet": "10.244.0.0/16"}
-
-; ha config
-; slb is software load balancing, will install harpoxy and keepalived on master node
-; clb is cloud load balancing, will use cloud load balancing
-ha={"type": "slb", "vip": "172.16.114.10", "mask": 16 }
-
-; loadBalancing is 4 layer forwarding to ingress by haproxy, only used in slb
-loadBalancing={"http": {"src": 80, "dest": 30001}, "https": {"src": 443, "dest": 30002}}
-
-[all:vars]
-ansible_ssh_port=22
-ansible_ssh_user=root
-ansible_ssh_pass=root
-# ansible_sudo_user=root
-# ansible_sudo_pass=root
-```
-
-For more instructions reference [inventory/README.md](inventory/README.md)
-
-#### Kubernetes management
-##### Deploy
-
-[![asciicast](https://asciinema.org/a/533389.svg)](https://asciinema.org/a/533389)
-
-```
-cd /usr/local/src/kubeasy
-make deploy
-```
-
-##### Scale
-
-[![asciicast](https://asciinema.org/a/533392.svg)](https://asciinema.org/a/533392)
-
-```
-cd /usr/local/src/kubeasy
-make scale
-```
-
-##### Update kubernetes configuration
-
-```
-cd /usr/local/src/kubeasy
-make update
-```
-
-##### Renew kubernetes certificates
-
-```
-cd /usr/local/src/kubeasy
-make renew
-```
-
-##### Upgrade kubernetes version
-
-For version upgrades, reference [here](https://kubernetes.io/zh-cn/releases/version-skew-policy/)
-
-```
-cd /usr/local/src/kubeasy
-git pull
-git checkout v1.27
-make upgrade KUBE_VERSION=<New Version>
-```
-
-### <span id = "offline">offline</span>
-
-Offline installation is divided into the following four files, Download the corresponding files for your needs.
-
-1. kubeasy-v${KUBEASY_VERSION}.tar.gz
-    * software packages and Pod images will be downloaded from the Internet
-2. kubeasy-binary-v${KUBEASY_VERSION}.tar.gz
-    * software packages required to deploy kubernetes
-3. kubeasy-registry-v${KUBEASY_VERSION}.tar.gz
-    * Pod images required to deploy kubernetes
-4. kubeasy-offline-v${KUBEASY_VERSION}.tar.gz
-    * Using Docker to run kubeasy, kubernetes can be installed completely offline
-
-
-If use the kubeasy-offline-v${KUBEASY_VERSION}.tar.gz, you need a deployment server. docker restarts and the deployment container is aborted because the installed docker and kubeasy methods are different.
-
-#### used kubeasy-binary or kubeasy-registry file
-
-[![asciicast](https://asciinema.org/a/533648.svg)](https://asciinema.org/a/533648)
-
-```
-KUBEASY_VERSION=1.26.0
-wget https://github.com/buxiaomo/kubeasy/releases/download/v${KUBEASY_VERSION}/kubeasy-v${KUBEASY_VERSION}.tar.gz -O /usr/local/src/kubeasy-v${KUBEASY_VERSION}.tar.gz
-tar -zxf /usr/local/src/kubeasy-v${KUBEASY_VERSION}.tar.gz -C /usr/local/src
-wget https://github.com/buxiaomo/kubeasy/releases/download/v${KUBEASY_VERSION}/kubeasy-registry-v${KUBEASY_VERSION}.tar.gz -O /usr/local/src/kubeasy/scripts/src/kubeasy-registry-v${KUBEASY_VERSION}.tar.gz
-wget https://github.com/buxiaomo/kubeasy/releases/download/v${KUBEASY_VERSION}/kubeasy-binary-v${KUBEASY_VERSION}.tar.gz -O /usr/local/src/kubeasy/scripts/src/kubeasy-binary-v${KUBEASY_VERSION}.tar.gz
-
-cd /usr/local/src/kubeasy
-ls -l ./scripts/src/
-make runtime
-make hosts
-make prepare
-make deploy REGISTRY_URL=http://<IP Addr>:5000
-```
-
-#### use kubeasy-offline
-
-[![asciicast](https://asciinema.org/a/533677.svg)](https://asciinema.org/a/533677)
-
-```
-KUBEASY_VERSION=1.26.0
-wget https://github.com/buxiaomo/kubeasy/releases/download/v${KUBEASY_VERSION}/kubeasy-offline-v${KUBEASY_VERSION}.tar.gz -O /usr/local/src/kubeasy-offline-v${KUBEASY_VERSION}.tar.gz
-tar -zxf /usr/local/src/kubeasy-offline-v${KUBEASY_VERSION}.tar.gz -C /usr/local/src
-cd /usr/local/src/kubeasy-offline-v${KUBEASY_VERSION}
-./main.sh
-```
-
-
-## Known Issues 
-
-* error: Following Cgroup subsystem not mounted: [memory], see [here](https://github.com/buxiaomo/kubeasy/issues/2)
-
-
-## knowledge
-
-* [download kubernetes](https://www.downloadkubernetes.com)
-* [kubernetes](https://github.com/kubernetes/kubernetes)
-* [kubernetes changelog](https://github.com/kubernetes/kubernetes/tree/master/CHANGELOG)
-* [kubernetes command line tools reference](https://kubernetes.io/zh/docs/reference/command-line-tools-reference/feature-gates/)
-* [calico](https://docs.projectcalico.org/getting-started/kubernetes/quickstart)
-* [canal](https://docs.projectcalico.org/getting-started/kubernetes/flannel/flannel)
-* [calico version of k8s](https://projectcalico.docs.tigera.io/getting-started/kubernetes/requirements)
-* [flannel](https://github.com/coreos/flannel#flannel)
-* [cilium](https://docs.cilium.io/en/stable/gettingstarted/#gs-guide)
-* [hubble](https://github.com/cilium/hubble)
-* [metrics-server](https://github.com/kubernetes-sigs/metrics-server)
-* [coredns on k8s](https://github.com/coredns/deployment/blob/master/kubernetes/CoreDNS-k8s_version.md)
-* [certificates](https://kubernetes.io/zh/docs/setup/best-practices/certificates/)
-* [k8s_the_hard_way](https://github.com/pythops/k8s_the_hard_way)
-* [IPv4/IPv6 dual-stack](https://kubernetes.io/zh/docs/concepts/services-networking/dual-stack/)
-* [validate IPv4/IPv6 dual-stack](https://kubernetes.io/zh/docs/tasks/network/validate-dual-stack/)
-* [CoreDNS k8s version](https://github.com/coredns/deployment/blob/master/kubernetes/CoreDNS-k8s_version.md)
+以上是根据您提供的网页内容整理的`kubeasy`项目的详尽笔记。如果需要更详细的信息或有特定的问题，请告知。
